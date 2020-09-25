@@ -5,7 +5,21 @@
     <div class="row">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header"> <h4><a href="{{ route('profile', $thread->creator) }}">{{ $thread->creator->name }}</a> posted:{{ $thread->title }}</h4></div>
+                <div class="card-header"> 
+                    <div class="level">
+                        <span class="flex">
+                            <h4><a href="{{ route('profile', $thread->creator) }}">{{ $thread->creator->name }}</a> posted:{{ $thread->title }}</h4>
+                        </span>
+                        @can ('update', $thread)
+                            <form action="{{ $thread->path() }}" method="POST">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+
+                                <button type="submit" class="btn btn-link">Delete Thread</button>
+                            </form>
+                        @endcan
+                    </div>
+                </div>
 
                 <div class="card-body">
                     <form method="POST" action="">
