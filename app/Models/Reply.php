@@ -2,11 +2,16 @@
 
 namespace App\Models;
 
+use App\RecordsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model
 {
+    use RecordsActivity;
+
+    protected $fillable =['body', 'thread_id', 'user_id'];
+
     protected $guarded = [];
     
     use HasFactory;
@@ -14,6 +19,11 @@ class Reply extends Model
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function thread()
+    {
+        return $this->belongsTo(Thread::class);
     }
 
     public function favorites()

@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\RecordsActivity;
 
 class Thread extends Model
 {
+    use RecordsActivity;
+
     protected $guarded = [];
     
     use HasFactory;

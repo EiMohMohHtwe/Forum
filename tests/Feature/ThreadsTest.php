@@ -54,7 +54,7 @@ class ThreadsTest extends TestCase
         $this->assertInstanceOf('App\Models\User', $thread->creator);
     }
 
-    function a_thread_has_a_reply()
+    function a_thread_has_a_replies()
     {
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->thread->replies);
     }
@@ -67,7 +67,6 @@ class ThreadsTest extends TestCase
         ]);
 
         $this->assertCount(1, $this->thread->replies);
-
     }
 
     function a_thread_belongs_to_a_channel()

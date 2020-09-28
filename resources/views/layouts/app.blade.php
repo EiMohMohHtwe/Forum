@@ -63,7 +63,7 @@
                                     <li><a href="/threads/{{ $channel->slug }}">{{ $channel->name }}</a></li>
                                 @endforeach
                             </ul>
-                        </li>                
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -105,6 +105,7 @@
 
         <main class="py-4">
             @yield('content')
+            <flash></flash>
         </main>
     </div>
 </body>
