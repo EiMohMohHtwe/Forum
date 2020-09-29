@@ -9,14 +9,17 @@
                     <small>Since {{ $profileUser->created_at->diffForHumans() }}</small>
                 </h1>
             </div>
-
+     
             @foreach ($activities as $date => $activity)
-                    <h3 class="page-header">{{ $date }}</h3>
+                <h3 class="page-header">{{ $date }}</h3>
 
-                    @foreach ($activity as $record)
+                @foreach ($activity as $record)
+                    @include ("profiles.activities.{$record->type}", ['activity' => $record])
+                    @if (view()->exists("profiles.activities.{$record->type}"))
                         @include ("profiles.activities.{$record->type}", ['activity' => $record])
-                    @endforeach
+                    @endif
                 @endforeach
+            @endforeach
         </div>
     </div>
 @endsection

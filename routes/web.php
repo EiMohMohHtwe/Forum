@@ -31,6 +31,11 @@ Route::post('/threads', [ThreadsController::class,'store']);
 
 Route::get('/threads/{channel}/{thread}/replies', [App\Http\Controllers\ReplyController::class, 'store']);
 
+Route::patch('/replies/{reply}', [App\Http\Controllers\ReplyController::class, 'update']);
+Route::delete('/replies/{reply}', [App\Http\Controllers\ReplyController::class, 'destroy']);
 Route::post('/replies/{reply}/favorites', [App\Http\Controllers\FavoritesController::class, 'store']);
 
 Route::get('/profiles/{user}', [App\Http\Controllers\ProfilesController::class,'show'])->name('profile');
+
+Route::post('/threads/{channel}/{thread}/subscriptions', [App\Http\Controllers\ThreadSubscriptionsController::class,'store'])->middleware('auth');
+

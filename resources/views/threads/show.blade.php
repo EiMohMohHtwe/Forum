@@ -65,6 +65,9 @@
                         <a href="#">{{ $thread->creator->name }}</a>, and currently
                          has {{ $thread->replies_count }} comments.
                     </p>
+                    <p>
+                        <subscribe-button></subscribe-button>
+                    </p>
                 </div>
             </div>
         </div>
