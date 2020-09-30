@@ -1,4 +1,4 @@
-<reply :atttributes="{{ $reply }}" inline-template v-cloak>
+<reply :attributes="{{ $reply }}" inline-template v-cloak>
     <div id="reply-{{ $reply->id }} "class="panel panel-default">
         <div class="panel-heading">
             <div class="level">

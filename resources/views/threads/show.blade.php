@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="">
+                    <!-- <form method="POST" action=""> -->
                         @csrf
                         <div class="form-group row">
                             <h5>{{ $thread->body }}</h5></br>
@@ -32,7 +32,7 @@
                                 @include('threads.reply')
                             @endforeach
                         </div>
-                    </form>
+                    <!-- </form> -->
                     @if( auth()->check())
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">

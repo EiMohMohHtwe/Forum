@@ -7,6 +7,9 @@
                 body: this.attributes.body
             };
         },
+        mounted() {
+            console.log(this.attributes)
+        }, 
         methods: {
             update() {
                 axios.patch('/replies/' + this.attributes.id, {

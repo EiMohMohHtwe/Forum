@@ -1915,6 +1915,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['message'],
+  data: function data() {
+    return {
+      body: this.message,
+      show: false
+    };
+  },
   mounted: function mounted() {
     console.log('Component mounted.');
   }
@@ -1938,6 +1945,9 @@ __webpack_require__.r(__webpack_exports__);
       editing: false,
       body: this.attributes.body
     };
+  },
+  mounted: function mounted() {
+    console.log(this.attributes);
   },
   methods: {
     update: function update() {

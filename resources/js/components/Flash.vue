@@ -6,6 +6,13 @@
 
 <script>
     export default {
+        props: ['message'],
+        data() {
+            return {
+                body: this.message,
+                show: false
+            }
+        },
         mounted() {
             console.log('Component mounted.')
         }
