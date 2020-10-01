@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\ThreadWasUpdated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\RecordsActivity;
@@ -32,6 +33,7 @@ class Thread extends Model
         //return '/threads' . $this->channel->slug . '/' . $this->id;
         return "/threads/{$this->channel->slug}/{$this->id}";
     }
+    
 
     public function replies()
     {
@@ -50,7 +52,16 @@ class Thread extends Model
 
     public function addReply($reply)
     {
-        $this->replies()->create($reply);
+        $reply = $this->replies()->create($reply);
+
+        $this->subscriptions
+            ->filter(function($sub) use ($reply){
+                return $sub->user_id != $reply->user_id;
+            })
+            
+            ->each->notify($reply);
+            
+        return $reply;
     }
 
     public function subscribe($userId = null)
@@ -58,6 +69,8 @@ class Thread extends Model
         $this->subscriptions()->create([
             'user_id' => $userId ?: auth()->id()
         ]);
+
+        return $this;
     }
 
     public function unsubscribe($userId = null)
@@ -77,5 +90,12 @@ class Thread extends Model
         return $this->subscriptions()
             ->where('user_id', auth()->id())
             ->exists();
+    }
+
+    public function hasUpdatesFor($user)
+    {
+        $key = $user->visitedThreadCacheKey($this);
+
+        return $this->updated_at > cache($key);
     }
 }

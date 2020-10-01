@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Thread;
 use App\Models\Channel;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Exists;
 
@@ -73,6 +74,10 @@ class ThreadsController extends Controller
      */
     public function show($channelId,Thread $thread)
     {
+        if (auth()->check()) {
+            auth()->user()->read($thread);
+        }
+
         return view('threads.show', compact('thread'));
     }
 

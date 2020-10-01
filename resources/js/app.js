@@ -21,6 +21,8 @@ window.Vue = require('vue');
 
 Vue.component('flash', require('./components/Flash.vue').default);
 Vue.component('reply', require('./components/Reply.vue').default);
+Vue.component('user-notifications', require('./components/UserNotifications.vue'));
+
 Vue.component('thread-view', require('./pages/Thread.vue'));
 
 /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Channel;
 use App\Models\Reply;
+use App\Inspections\Spam;
 use App\Models\Thread;
 use Illuminate\Http\Request;
 
@@ -14,8 +15,10 @@ class ReplyController extends Controller
         $this->middleware('auth');        
     }
 
-    public function store($ChannelId, Thread $thread)
+    public function store($ChannelId, Thread $thread, Spam $spam)
     {
+        $spam->detect(request('body'));
+        
         $thread->addReply([
            'body' => request('body'),
            'user_id' => auth()->id()

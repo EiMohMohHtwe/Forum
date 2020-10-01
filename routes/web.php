@@ -40,3 +40,6 @@ Route::get('/profiles/{user}', [App\Http\Controllers\ProfilesController::class,'
 Route::post('/threads/{channel}/{thread}/subscriptions', [App\Http\Controllers\ThreadSubscriptionsController::class,'store'])->middleware('auth');
 Route::delete('/threads/{channel}/{thread}/subscriptions', [App\Http\Controllers\ThreadSubscriptionsController::class,'destroy'])->middleware('auth');
 
+Route::get('/profiles/{user}/notifications', [App\Http\Controllers\UserNotificationsController::class,'index']);
+Route::delete('/profiles/{user}/notifications/{notification}', [App\Http\Controllers\UserNotificationsController::class,'destroy']);
+

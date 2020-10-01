@@ -87,10 +87,27 @@ class ParticipateInForum extends TestCase
 
         $reply = create('App\Reply', ['user_id' => auth()->id() ]);
 
-        $updatedReply = 'You been charted, fool.';
+        $updatedReply = 'You been changed, fool.';
         $this->patch("/replies/{$reply->id}", ['body' => $updatedReply]);
 
         $this->assertDatabaseHas('replies', ['id' => $reply->id, 'body' => $updatedReply]);
+    }
+
+    function replies_that_contain_spam_may_not_be_created()
+    {
+        $this->withExceptionHandling();
+
+        $this->signIn();
+
+        $thread = create('App\Thread');
+
+        $reply = make('App\Reply', [
+            'body' => 'Yahoo Customer Support'
+        ]);
+
+        //$this->json('post', $thread->path() . '/replies', $reply->toArray())
+            //->assertStatus(422);
+        $this->post($thread->path() . '/replies' . $reply->toArray());
     }
 
 }

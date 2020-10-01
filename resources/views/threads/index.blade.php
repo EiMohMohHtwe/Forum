@@ -10,7 +10,13 @@
                         <div class="level">
                             <h4 class="flex">
                                 <a href="/threads/{{ $thread->id }}">
-                                    {{ $thread->title }}
+                                    @if (auth()->check() && $thread->hasUpdatesFor(auth()->user()))
+                                        <strong>
+                                            {{ $thread->title }}
+                                        </strong>
+                                    @else
+                                        {{ $thread->title }}
+                                    @endif
                                 </a>
                             </h4>
                                 <a href="{{ $thread->path() }}"> {{ $thread->replies_count }} replies </a>
