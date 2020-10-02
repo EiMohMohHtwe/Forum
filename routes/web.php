@@ -29,7 +29,7 @@ Route::get('threads/{channel}/{thread}', [ThreadsController::class,'show']);
 Route::delete('threads/{channel}/{thread}', [ThreadsController::class,'destroy']);
 Route::post('/threads', [ThreadsController::class,'store']);
 
-Route::get('/threads/{channel}/{thread}/replies', [App\Http\Controllers\ReplyController::class, 'store']);
+Route::post('/threads/{channel}/{thread}/replies', [App\Http\Controllers\ReplyController::class, 'store']);
 
 Route::patch('/replies/{reply}', [App\Http\Controllers\ReplyController::class, 'update']);
 Route::delete('/replies/{reply}', [App\Http\Controllers\ReplyController::class, 'destroy']);
@@ -42,4 +42,6 @@ Route::delete('/threads/{channel}/{thread}/subscriptions', [App\Http\Controllers
 
 Route::get('/profiles/{user}/notifications', [App\Http\Controllers\UserNotificationsController::class,'index']);
 Route::delete('/profiles/{user}/notifications/{notification}', [App\Http\Controllers\UserNotificationsController::class,'destroy']);
+
+Route::get('/api/users', [App\Http\Controllers\Api\UsersController::class,'index']);
 

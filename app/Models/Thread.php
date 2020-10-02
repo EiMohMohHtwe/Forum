@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\ThreadReceivedNewReply;
 use App\Notifications\ThreadWasUpdated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -54,12 +55,14 @@ class Thread extends Model
     {
         $reply = $this->replies()->create($reply);
 
-        $this->subscriptions
-            ->filter(function($sub) use ($reply){
-                return $sub->user_id != $reply->user_id;
-            })
+        event(new ThreadReceivedNewReply($reply));
+
+        //$this->subscriptions
+        //    ->filter(function($sub) use ($reply){
+        //        return $sub->user_id != $reply->user_id;
+        //    })
             
-            ->each->notify($reply);
+        //    ->each->notify($reply);
             
         return $reply;
     }

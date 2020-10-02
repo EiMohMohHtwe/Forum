@@ -7,6 +7,7 @@ use App\Models\Reply;
 use App\Inspections\Spam;
 use App\Models\Thread;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ReplyController extends Controller
 {
@@ -17,19 +18,26 @@ class ReplyController extends Controller
 
     public function store($ChannelId, Thread $thread, Spam $spam)
     {
+        if (Gate::denies('create', new Reply)) {
+            return response(
+                'You are posting too frequently. Please take a break. :)', 429
+            );
+        }
         $spam->detect(request('body'));
         
-        $thread->addReply([
+        return $thread->addReply([
            'body' => request('body'),
            'user_id' => auth()->id()
-        ]);
+        ])->load('owner');
 
-       return back();
+      // return back();
     }
 
-    public function update(Reply $reply)
+    public function update(Reply $reply, Spam $spam)
     {
         $this->authorize('update', $reply);
+
+        $spam->detect(request('body'));
         
         $reply->update(request(['body']));
     }

@@ -2079,16 +2079,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['message'],
   data: function data() {
     return {
-      body: this.message,
-      show: false
+      notifications: false
     };
   },
-  mounted: function mounted() {
-    console.log('Component mounted.');
+  created: function created() {
+    var _this = this;
+
+    axios.get('/profiles/' + window.App.user.name + '/notifications').then(function (response) {
+      return _this.notifications = response.data;
+    });
+  },
+  methods: {
+    markAsRead: function markAsRead(notification) {
+      axios["delete"]('/profiles/' + window.App.user.name + '/notifications/' + notification.id);
+    }
   }
 });
 
@@ -37785,8 +37804,51 @@ render._withStripped = true
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function () {}
-var staticRenderFns = []
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.notifications.length
+    ? _c("li", { staticClass: "dropdown" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "ul",
+          { staticClass: "dropdown-menu" },
+          _vm._l(_vm.notifications, function(notification) {
+            return _c("li", [
+              _c("a", {
+                attrs: { href: notification.data.link },
+                domProps: { textContent: _vm._s(notification.data.message) },
+                on: {
+                  click: function($event) {
+                    return _vm.markAsRead(notification)
+                  }
+                }
+              })
+            ])
+          }),
+          0
+        )
+      ])
+    : _vm._e()
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "dropdown-toggle",
+        attrs: { href: "#", "data-toggle": "dropdown" }
+      },
+      [_c("span", { staticClass: "glyphicon glyphicon-bell" })]
+    )
+  }
+]
+render._withStripped = true
 
 
 

@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Models\Reply;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use PHPUnit\Framework\TestCase;
 
@@ -23,5 +25,38 @@ class ReplyTest extends TestCase
         $reply = factory('App\Models\Reply')->create();
 
         $this->assertInstanceOf('App\Models\User', $reply->owner);
+    }
+
+    function it_knows_if_it_was_just_published()
+    {
+        $reply = create('App\Reply');
+
+        $this->assertTrue($reply->wasJustPublished());
+
+        $reply->created_at = Carbon::now()->subMonth();
+
+        $this->assertFalse($reply->wasJustPublished());
+    }
+
+    function it_can_detect_all_mentioned_users_in_the_body()
+    {
+        $reply = new Reply([
+            'body' => '@EmmaStone  wants to talk to @ScarlettJohansson '
+        ]);
+
+        $this->assertEquals(['EmmaStone', 'Scarlett Johansson '], $reply->mentionedUsers());
+    }
+
+    function it_wraps_mentioned_usernames_in_the_body_within_anchor_tags()
+    {
+        $reply = new Reply([
+            'body' => 'Hello @Emma-Stone.'
+        ]);
+
+        $this->assertEquals(
+            'Hello <a href="/profiles/Emma-Stone">@Emma-Stone</a>.',
+            $reply->body
+        );
+
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\RecordsActivity;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -50,5 +51,26 @@ class Reply extends Model
     public function isFavorited()
     {
         return $this->favorites()->where('user_id', auth()->id())->exists();
+    }
+
+    public function wasJustPublished()
+    {
+        return $this->created_at->gt(Carbon::now()->subMinute());
+    }
+
+    public function mentionedUsers()
+    {
+        preg_match_all('/\@([^\s\.]+)/', $this->body, $matches);
+
+        return $matches[1];
+    }
+
+    public function setBodyAttribute($body)
+    {
+        $this->attributes['body'] = preg_replace(
+            '/@([\w\-]+)/',
+            '<a href="/profiles/$1">$0</a>',
+            $body
+        );
     }
 }
