@@ -45,3 +45,4 @@ Route::delete('/profiles/{user}/notifications/{notification}', [App\Http\Control
 
 Route::get('/api/users', [App\Http\Controllers\Api\UsersController::class,'index']);
 
+Route::post('/api/users/{user}/avatar', [App\Http\Controllers\Api\UserAvatarController::class,'store'])->middleware('auth')->name('avatar');
