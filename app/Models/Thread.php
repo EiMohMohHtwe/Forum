@@ -7,6 +7,7 @@ use App\Notifications\ThreadWasUpdated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\RecordsActivity;
+use App\Visits;
 use Illuminate\Support\Facades\Redis;
 
 class Thread extends Model
@@ -32,7 +33,6 @@ class Thread extends Model
 
     public function path()
     {
-        //return '/threads' . $this->channel->slug . '/' . $this->id;
         return "/threads/{$this->channel->slug}/{$this->id}";
     }
     
@@ -57,13 +57,6 @@ class Thread extends Model
         $reply = $this->replies()->create($reply);
 
         event(new ThreadReceivedNewReply($reply));
-
-        //$this->subscriptions
-        //    ->filter(function($sub) use ($reply){
-        //        return $sub->user_id != $reply->user_id;
-        //    })
-            
-        //    ->each->notify($reply);
             
         return $reply;
     }
@@ -103,27 +96,9 @@ class Thread extends Model
         return $this->updated_at > cache($key);
     }
 
-    public function recordVisit()
-    {
-        Redis::incr("threads.{$this->id}.visits");
-
-        return $this;
-    }
-
     public function visits()
     {
-        return Redis::get($this->visitsCacheKey());
+        return new Visits($this);
     }
 
-    public function resetVisits()
-    {
-        Redis::del($this->visitsCacheKey());
-
-        return $this;
-    }
-
-    protected function visitsCacheKey()
-    {
-        return "threads.{$this->id}.visits";
-    }
 }

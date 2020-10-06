@@ -41,7 +41,7 @@ class ThreadsTest extends TestCase
             ->assertSee($reply->body);
     }
 
-    function a_thread_can_make_a_string_path()
+    function a_thread_has_a_path()
     {
         $thread = create('App\Models\Thread');
 
@@ -155,15 +155,17 @@ class ThreadsTest extends TestCase
     {
         $thread = make('App\Thread', ['id' => 1]);
 
-        $thread->resetVisits();
+        $thread->visits()->reset();
 
-        $thread->recordVisit();
+        $this->assertSame(0, $thread->visits());
 
-        $this->assertEquals(1, $thread->visits());
+        $thread->visits()->record();
 
-        $thread->recordVisit();
+        $this->assertEquals(1, $thread->visits()->count());
 
-        $this->assertEquals(2, $thread->visits());
+        //$thread->recordVisit();
+
+       // $this->assertEquals(2, $thread->visits());
 
     }
 }

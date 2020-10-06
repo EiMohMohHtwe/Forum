@@ -27,7 +27,7 @@ Route::get('/threads/{channel}', [ThreadsController::class,'index']);
 Route::get('/create', [ThreadsController::class,'create']);
 Route::get('threads/{channel}/{thread}', [ThreadsController::class,'show']);
 Route::delete('threads/{channel}/{thread}', [ThreadsController::class,'destroy']);
-Route::post('/threads', [ThreadsController::class,'store']);
+Route::post('/threads', [ThreadsController::class,'store'])->middleware('must-be-confirmed');
 
 Route::post('/threads/{channel}/{thread}/replies', [App\Http\Controllers\ReplyController::class, 'store']);
 
@@ -46,3 +46,5 @@ Route::delete('/profiles/{user}/notifications/{notification}', [App\Http\Control
 Route::get('/api/users', [App\Http\Controllers\Api\UsersController::class,'index']);
 
 Route::post('/api/users/{user}/avatar', [App\Http\Controllers\Api\UserAvatarController::class,'store'])->middleware('auth')->name('avatar');
+
+Route::get('/register/confirm', [App\Http\Controllers\Api\RegisterConfirmationController::class,'index']);

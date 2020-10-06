@@ -68,7 +68,7 @@ class ThreadsController extends Controller
             'user_id' => auth()->id(),
             'channel_id' => request('channel_id'),
             'title' => request('title'),
-            'body' => request('body')
+            'body' => request('body'),
         ]);
 
         return redirect()->route('threads.index');
@@ -90,6 +90,8 @@ class ThreadsController extends Controller
             'title' => $thread->title,
             'path' => $thread->path()
         ]));
+
+        $thread->visits()->record();
 
         return view('threads.show', compact('thread'));
     }

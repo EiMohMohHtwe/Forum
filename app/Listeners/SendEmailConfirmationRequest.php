@@ -2,11 +2,13 @@
 
 namespace App\Listeners;
 
-use App\Events\ThreadReceivedNewReply;
+use App\Mail\PleaseConfirmYourEmail;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Mail;
 
-class NotifyMentionedUsers
+class SendEmailConfirmationRequest
 {
     /**
      * Create the event listener.
@@ -21,11 +23,11 @@ class NotifyMentionedUsers
     /**
      * Handle the event.
      *
-     * @param  ThreadReceivedNewReply  $event
+     * @param  object  $event
      * @return void
      */
-    public function handle(ThreadReceivedNewReply $event)
+    public function handle(Registered $event)
     {
-        //
+        Mail::to($event->user)->send(new PleaseConfirmYourEmail($event->user));
     }
 }
