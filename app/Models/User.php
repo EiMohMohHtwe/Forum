@@ -84,4 +84,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Reply::class)->latest();
     }
+
+    public function isAdmin()
+    {
+        return in_array($this->name, ['JohnDoe', 'NewUser8']);
+    }
 }

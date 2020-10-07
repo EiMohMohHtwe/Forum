@@ -29,6 +29,8 @@ Route::get('threads/{channel}/{thread}', [ThreadsController::class,'show']);
 Route::delete('threads/{channel}/{thread}', [ThreadsController::class,'destroy']);
 Route::post('/threads', [ThreadsController::class,'store'])->middleware('must-be-confirmed');
 
+//Route::patch('threads/{channel}/{thread}', [ThreadsController::class,'update'])->name('threads.update');
+
 Route::post('/threads/{channel}/{thread}/replies', [App\Http\Controllers\ReplyController::class, 'store']);
 
 Route::patch('/replies/{reply}', [App\Http\Controllers\ReplyController::class, 'update']);
@@ -48,3 +50,7 @@ Route::get('/api/users', [App\Http\Controllers\Api\UsersController::class,'index
 Route::post('/api/users/{user}/avatar', [App\Http\Controllers\Api\UserAvatarController::class,'store'])->middleware('auth')->name('avatar');
 
 Route::get('/register/confirm', [App\Http\Controllers\Api\RegisterConfirmationController::class,'index']);
+
+Route::post('/replies/{reply}/best', [App\Http\Controllers\BestRepliesController::class,'store'])->name('best-replies.store');
+
+Route::post('locked-threads/{thread}', [App\Http\Controllers\LockedThreadsController::class,'store'])->name('locked-threads.store')->middleware('admin');

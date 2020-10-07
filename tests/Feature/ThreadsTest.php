@@ -168,4 +168,13 @@ class ThreadsTest extends TestCase
        // $this->assertEquals(2, $thread->visits());
 
     }
+
+    function a_thread_may_be_locked()
+    {
+        $this->assertFalse($this->thread->locked);
+
+        $this->thread->lock();
+
+        $this->assertTrue($this->thread->locked);
+    }
 }

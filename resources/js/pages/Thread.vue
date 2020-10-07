@@ -11,7 +11,8 @@ export default {
 
     data(){
         return{
-            repliesCount: this.initialRepliesCount
+            repliesCount: this.initialRepliesCount,
+            locked: false
         };
     }
 }

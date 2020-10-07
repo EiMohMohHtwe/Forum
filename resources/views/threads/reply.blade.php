@@ -1,5 +1,5 @@
 <reply :attributes="{{ $reply }}" inline-template v-cloak>
-    <div id="reply-{{ $reply->id }} "class="panel panel-default">
+    <div id="reply-{{ $reply->id }} " class="panel" :class="isBest ? 'panel-success': 'panel-default'">
         <div class="panel-heading">
             <div class="level">
                 <h5 class="flex">
@@ -42,6 +42,7 @@
 
                     <button type="submit" class="btn btn-danger btn-xs">Delete</button>
                 </form>
+               <!-- <button class="btn btn-default" @click="markBestReply" v-show="! isBest">Best Reply?</button> -->
             </div>
         @endcan
     </div>

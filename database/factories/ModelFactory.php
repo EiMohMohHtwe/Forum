@@ -46,3 +46,9 @@ $factory->define(\Illuminate\Notifications\DatabaseNotification::class, function
         'data' => ['foo' => 'bar']
     ];
 });
+
+$factory->state(App\User::class, 'administrator', function () {
+    return [
+        'name' => 'JohnDoe'
+    ];
+});

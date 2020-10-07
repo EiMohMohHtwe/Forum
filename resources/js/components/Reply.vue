@@ -1,10 +1,17 @@
+<template>
+    <p v-if="$parent.locked">
+        This thread has been locked.No more replies are allowed.
+    </p>
+</template>
+
 <script>
     export default {
         props: ['attributes'],
         data() {
             return {
                 editing: false,
-                body: this.attributes.body
+                body: this.attributes.body,
+                isBest: false
             };
         },
         mounted() {
@@ -17,6 +24,12 @@
                 });
                 this.editing = false;
                 flash('Updated!');
+            },
+
+            markBestReply() {
+                this.isBest = true;
+
+                axios.post('/replies/' + this.data.id + '/best');
             }
         }
     }
