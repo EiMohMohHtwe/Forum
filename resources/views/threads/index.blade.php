@@ -60,6 +60,16 @@
                             </li>
                         @endforeach
                     </ul>
+                    <div class="form-group">
+                    <form method="GET" action="/threads/search">
+                        <div class="form-group">
+                            <input type="text" placeholder="Search for something..." name="q" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-default" type="submit">Search</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

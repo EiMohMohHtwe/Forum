@@ -1,9 +1,3 @@
-<template>
-    <p v-if="$parent.locked">
-        This thread has been locked.No more replies are allowed.
-    </p>
-</template>
-
 <script>
     export default {
         props: ['attributes'],

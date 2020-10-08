@@ -29,7 +29,7 @@ Route::get('threads/{channel}/{thread}', [ThreadsController::class,'show']);
 Route::delete('threads/{channel}/{thread}', [ThreadsController::class,'destroy']);
 Route::post('/threads', [ThreadsController::class,'store'])->middleware('must-be-confirmed');
 
-//Route::patch('threads/{channel}/{thread}', [ThreadsController::class,'update'])->name('threads.update');
+Route::patch('threads/{channel}/{thread}', [ThreadsController::class,'update']);
 
 Route::post('/threads/{channel}/{thread}/replies', [App\Http\Controllers\ReplyController::class, 'store']);
 
@@ -54,3 +54,5 @@ Route::get('/register/confirm', [App\Http\Controllers\Api\RegisterConfirmationCo
 Route::post('/replies/{reply}/best', [App\Http\Controllers\BestRepliesController::class,'store'])->name('best-replies.store');
 
 Route::post('locked-threads/{thread}', [App\Http\Controllers\LockedThreadsController::class,'store'])->name('locked-threads.store')->middleware('admin');
+
+Route::get('threads/search', [App\Http\Controllers\SearchController::class,'show']);

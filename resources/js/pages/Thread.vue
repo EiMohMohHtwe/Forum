@@ -12,8 +12,13 @@ export default {
     data(){
         return{
             repliesCount: this.initialRepliesCount,
-            locked: false
+            locked: false,
+            editing: false
         };
+    },
+
+    update() {
+        
     }
 }
 </script>
