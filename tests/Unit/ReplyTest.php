@@ -20,6 +20,7 @@ class ReplyTest extends TestCase
         $this->assertTrue(true);
     }
 
+    /** @test */
     function it_has_an_owner()
     {
         $reply = factory('App\Models\Reply')->create();
@@ -27,6 +28,7 @@ class ReplyTest extends TestCase
         $this->assertInstanceOf('App\Models\User', $reply->owner);
     }
 
+    /** @test */
     function it_knows_if_it_was_just_published()
     {
         $reply = create('App\Reply');
@@ -38,6 +40,7 @@ class ReplyTest extends TestCase
         $this->assertFalse($reply->wasJustPublished());
     }
 
+    /** @test */
     function it_can_detect_all_mentioned_users_in_the_body()
     {
         $reply = new Reply([
@@ -47,6 +50,7 @@ class ReplyTest extends TestCase
         $this->assertEquals(['EmmaStone', 'Scarlett Johansson '], $reply->mentionedUsers());
     }
 
+    /** @test */
     function it_wraps_mentioned_usernames_in_the_body_within_anchor_tags()
     {
         $reply = new Reply([
@@ -60,6 +64,7 @@ class ReplyTest extends TestCase
 
     }
 
+    /** @test */
     function it_knows_if_it_is_the_best_reply()
     {
         $reply = create('App\Reply');

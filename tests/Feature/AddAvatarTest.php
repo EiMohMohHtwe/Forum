@@ -17,6 +17,7 @@ class AddAvatarTest extends TestCase
      *
      * @return void
      */
+
     public function testExample()
     {
         $response = $this->get('/');
@@ -24,6 +25,7 @@ class AddAvatarTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /** @test */
     public function only_members_can_add_avatars()
     {
         $this->withExceptionHandling();
@@ -32,6 +34,7 @@ class AddAvatarTest extends TestCase
             ->assertStatus(401);
     }
 
+    /** @test */
     function a_valid_avatar_must_be_provided()
     {
         $this->withExceptionHandling()->signIn();
@@ -41,6 +44,7 @@ class AddAvatarTest extends TestCase
         ])->assertStatus(422);
     }
 
+    /** @test */
     function a_user_may_add_an_avatar_to_their_profile()
     {
         $this->signIn();

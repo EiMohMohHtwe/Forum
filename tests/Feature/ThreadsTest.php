@@ -16,6 +16,8 @@ class ThreadsTest extends TestCase
      *
      * @return void
      */
+
+     /** @test */
     public function a_user_can_view_all_threads()
     {
         $thread = factory('App\Models\Thread')->create();
@@ -25,6 +27,7 @@ class ThreadsTest extends TestCase
             ->assertSee($thread->title);
     }
 
+    /** @test */
     function a_user_can_read_a_single_thread()
     {
         $thread = factory('App\Models\Thread')->create();
@@ -33,6 +36,7 @@ class ThreadsTest extends TestCase
             ->assertSee($thread->title);
     }
 
+    /** @test */
     function a_user_can_read_replies_that_are_associated_with_a_thread()
     {
         $reply = create('App\Reply', ['thread_id' => $this->thread->id]);
@@ -41,6 +45,7 @@ class ThreadsTest extends TestCase
             ->assertSee($reply->body);
     }
 
+    /** @test */
     function a_thread_has_a_path()
     {
         $thread = create('App\Models\Thread');
@@ -48,6 +53,7 @@ class ThreadsTest extends TestCase
         $this->assertEquals('/threads/' . $thread->channel->slug . '/' . $thread->id, $thread->path());
     }
 
+    /** @test */
     function a_thread_has_a_creator()
     {
         $thread = factory('App\Thread')->create();
@@ -55,11 +61,13 @@ class ThreadsTest extends TestCase
         $this->assertInstanceOf('App\Models\User', $thread->creator);
     }
 
+    /** @test */
     function a_thread_has_a_replies()
     {
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->thread->replies);
     }
 
+    /** @test */
     public function a_thread_can_add_a_reply()
     {
         $this->thread->addReply([
@@ -70,6 +78,7 @@ class ThreadsTest extends TestCase
         $this->assertCount(1, $this->thread->replies);
     }
 
+    /** @test */
     function a_thread_belongs_to_a_channel()
     {
         $thread = create('App\Models\Thread');
@@ -77,6 +86,7 @@ class ThreadsTest extends TestCase
         $this->assertInstanceOf('App\Models\Channel', $thread->channel);
     }
 
+    /** @test */
     function a_user_can_filter_threads_according_to_a_channel()
     {
         $channel = create('App\Channel');
@@ -88,6 +98,7 @@ class ThreadsTest extends TestCase
             ->assertDontSee($threadNotInChannel->title);
     }
 
+    /** @test */
     function a_user_can_filter_threads_by_any_username()
     {
         $this->signIn(create('App\User', ['name' => 'test2']));
@@ -100,6 +111,7 @@ class ThreadsTest extends TestCase
             ->assertDontSee($threadNotByJohn->title);
     }
 
+    /** @test */
     function a_thread_can_be_subscribed_to()
     {
         $thread = create('App\Thread');
@@ -112,6 +124,7 @@ class ThreadsTest extends TestCase
         );
     }
 
+    /** @test */
     function a_thread_can_be_unsubscribed_from()
     {
         $thread = create('App\Thread');
@@ -123,6 +136,7 @@ class ThreadsTest extends TestCase
         $thread->assertCount(0, $thread->subscriptions);
     }
 
+    /** @test */
     function it_knows_if_the_authenticated_user_is_subscribed_to_it()
     {
         $thread = create('App\Thread');
@@ -136,6 +150,7 @@ class ThreadsTest extends TestCase
         $this->assertTrue($thread->isSubscribedTo);
     }
 
+    /** @test */
     function a_thread_can_check_if_the_authenticated_user_has_read_all_replies()
     {
         $this->signIn();
@@ -151,6 +166,7 @@ class ThreadsTest extends TestCase
         });
     }
 
+    /** @test */
     function a_thread_records_each_visit()
     {
         $thread = make('App\Thread', ['id' => 1]);
@@ -169,6 +185,7 @@ class ThreadsTest extends TestCase
 
     }
 
+    /** @test */
     function a_thread_may_be_locked()
     {
         $this->assertFalse($this->thread->locked);

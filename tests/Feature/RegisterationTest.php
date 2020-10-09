@@ -18,6 +18,7 @@ class RegisterationTest extends TestCase
      *
      * @return void
      */
+
     public function testExample()
     {
         $response = $this->get('/');
@@ -25,6 +26,7 @@ class RegisterationTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /** @test */
     function a_confirmation_email_is_sent_upon_registration()
     {
         Mail::fake();
@@ -34,6 +36,7 @@ class RegisterationTest extends TestCase
         Mail::assertSent(PleaseConfirmYourEmail::class);
     }
 
+    /** @test */
     function user_can_fully_confirm_their_email_address()
     {
         $this->post('/register', [

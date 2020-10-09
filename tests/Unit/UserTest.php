@@ -22,6 +22,7 @@ class UserTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /** @test */
     public function a_user_can_fetch_their_most_recent_reply()
     {
         $user = create('App\User');
@@ -31,6 +32,7 @@ class UserTest extends TestCase
         $this->assertEquals($reply->id, $user->lastReply->id);
     }
 
+    /** @test */
     function a_user_can_determine_their_avatar_path()
     {
         $user = create('App\User');

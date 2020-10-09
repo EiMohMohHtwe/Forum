@@ -15,6 +15,7 @@ class LockThreadsTest extends TestCase
      *
      * @return void
      */
+
     public function testExample()
     {
         $response = $this->get('/');
@@ -22,6 +23,7 @@ class LockThreadsTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /** @test */
     function non_administrators_may_not_lock_threads()
     {
         $this->withExceptionHandling();
@@ -35,6 +37,7 @@ class LockThreadsTest extends TestCase
         $this->assertFalse(! ! $thread->fresh()->locked);
     }
 
+    /** @test */
     function administrators_can_lock_threads()
     {
         $this->signIn(factory('App\User')->states('administrator')->create());
@@ -46,6 +49,7 @@ class LockThreadsTest extends TestCase
         $this->assertTrue(! ! $thread->fresh()->locked, 'Failed asserting that the thread was locked.');
     }
 
+    /** @test */
     public function once_locked_a_thread_may_not_receive_new_replies()
     {
         $this->signIn();

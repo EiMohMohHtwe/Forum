@@ -16,6 +16,7 @@ class NotificationsTest extends TestCase
      *
      * @return void
      */
+
     public function testExample()
     {
         $response = $this->get('/');
@@ -23,6 +24,7 @@ class NotificationsTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /** @test */
     function a_notification_is_prepared_when_a_subscribed_thread_receives_a_new_reply_that_is_not_by_the_current_user()
     {
         $this->signIn();
@@ -46,6 +48,7 @@ class NotificationsTest extends TestCase
          $this->assertCount(1, auth()->user()->fresh()->notifications);
     }
 
+    /** @test */
     function a_user_can_fetch_their_unread_notifications()
     {
         $this->signIn();
@@ -60,6 +63,7 @@ class NotificationsTest extends TestCase
         );
     }
 
+    /** @test */
     function a_user_can_mark_a_notification_as_read()
     {
         $this->signIn();

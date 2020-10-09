@@ -15,6 +15,7 @@ class MentionUsersTest extends TestCase
      *
      * @return void
      */
+
     public function testExample()
     {
         $response = $this->get('/');
@@ -22,6 +23,7 @@ class MentionUsersTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /** @test */
     function mentioned_users_in_a_reply_are_notified()
     {
         $john = create('App\User',['name' => 'JessicaAlba']);

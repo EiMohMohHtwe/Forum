@@ -24,6 +24,7 @@ class ActivityTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /** @test */
     public function it_records_activity_when_a_thread_is_created()
     {
         $this->signIn();
@@ -42,7 +43,8 @@ class ActivityTest extends TestCase
         $this->assertEquals($activity->subject->id, $thread->id);
     }
 
-        function it_records_activity_when_a_reply_is_created()
+    /** @test */
+    function it_records_activity_when_a_reply_is_created()
     {
         $this->signIn();
 
@@ -51,6 +53,7 @@ class ActivityTest extends TestCase
         $this->assertEquals(2, Activity::count());
     }
 
+    /** @test */
     function it_fetches_a_feed_for_any_user()
     {
         $this->signIn();

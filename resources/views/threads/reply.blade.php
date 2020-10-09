@@ -42,7 +42,7 @@
 
                     <button type="submit" class="btn btn-danger btn-xs">Delete</button>
                 </form>
-               <!-- <button class="btn btn-default" @click="markBestReply" v-show="! isBest">Best Reply?</button> -->
+               <button class="btn btn-default" @click="markBestReply" v-show="! isBest">Best Reply?</button>
             </div>
         @endcan
     </div>

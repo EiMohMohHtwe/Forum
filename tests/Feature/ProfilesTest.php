@@ -15,6 +15,7 @@ class ProfilesTest extends TestCase
      *
      * @return void
      */
+
     public function testExample()
     {
         $response = $this->get('/');
@@ -22,6 +23,7 @@ class ProfilesTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /** @test */
     public function a_user_has_a_profile()
     {
         $user = create('App\User');
@@ -30,6 +32,7 @@ class ProfilesTest extends TestCase
             ->assertSee($user->name);
     }
 
+    /** @test */
     function profiles_display_all_threads_created_by_the_associated_user()
     {
         $this->signIn();

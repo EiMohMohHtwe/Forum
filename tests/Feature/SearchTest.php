@@ -15,6 +15,7 @@ class SearchTest extends TestCase
      *
      * @return void
      */
+
     public function testExample()
     {
         $response = $this->get('/');
@@ -22,6 +23,7 @@ class SearchTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /** @test */
     public function a_user_can_search_threads()
     {
         config(['scout.driver' => 'algolia']);

@@ -15,6 +15,7 @@ class ParticipateInForum extends TestCase
      *
      * @return void
      */
+
     public function testExample()
     {
         $response = $this->get('/');
@@ -22,6 +23,7 @@ class ParticipateInForum extends TestCase
         $response->assertStatus(200);
     }
 
+    /** @test */
     function unauthenticated_users_may_not_add_replies()
     {
         $this->expectException('Illuminate\Auth\AuthenticationException');
@@ -30,6 +32,7 @@ class ParticipateInForum extends TestCase
 
     }
 
+    /** @test */
     function an_authenticated_user_may_participate_in_forum_threads()
     {
         $this->signIn();
@@ -43,6 +46,7 @@ class ParticipateInForum extends TestCase
             ->assertSee($reply->body);
     }
 
+    /** @test */
     function unauthorized_users_cannot_delete_replies()
     {
         $this->withExceptionHandling();
@@ -57,6 +61,7 @@ class ParticipateInForum extends TestCase
             ->assertStatus(403);
     }
 
+    /** @test */
     function authorized_users_can_delete_replies()
     {
         $this->signIn();
@@ -67,6 +72,7 @@ class ParticipateInForum extends TestCase
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
     }
 
+    /** @test */
     function unauthorized_users_cannot_update_replies()
     {
         $this->withExceptionHandling();
@@ -81,6 +87,7 @@ class ParticipateInForum extends TestCase
             ->assertStatus(403);
     }
 
+    /** @test */
     function authorized_users_can_update_replies()
     {
         $this->signIn();
@@ -93,6 +100,7 @@ class ParticipateInForum extends TestCase
         $this->assertDatabaseHas('replies', ['id' => $reply->id, 'body' => $updatedReply]);
     }
 
+    /** @test */
     function replies_that_contain_spam_may_not_be_created()
     {
         $this->withExceptionHandling();
@@ -109,6 +117,7 @@ class ParticipateInForum extends TestCase
             ->assertStatus(422);
     }
 
+    /** @test */
     function users_may_only_reply_a_maximum_of_once_per_minute()
     {
         $this->signIn();

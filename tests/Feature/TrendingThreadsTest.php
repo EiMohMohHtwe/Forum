@@ -11,6 +11,7 @@ class TrendingThreadsTest extends TestCase
 {
     use DatabaseMigrations;
 
+    /** @test */
     public function set_Up()
     {
         parent::setUp();
@@ -18,6 +19,7 @@ class TrendingThreadsTest extends TestCase
         Redis::del('trending_threads');
     }
 
+    /** @test */
     public function it_increments_a_threads_score_each_time_it_is_read()
     {
         $this->assertEmpty(Redis::zrevrange('trending_threads', 0,-1));

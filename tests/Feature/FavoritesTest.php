@@ -15,6 +15,7 @@ class FavoritesTest extends TestCase
      *
      * @return void
      */
+
     public function testExample()
     {
         $response = $this->get('/');
@@ -22,6 +23,7 @@ class FavoritesTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /** @test */
     function guests_can_not_favorite_anything()
     {
         $this->withExceptionHandling()
@@ -29,6 +31,7 @@ class FavoritesTest extends TestCase
             ->assertRedirect('/login');
     }
 
+    /** @test */
     public function an_authenticated_user_can_favorite_any_reply()
     {
         $this->signIn();
@@ -40,6 +43,7 @@ class FavoritesTest extends TestCase
         $this->assertCount(1, $reply->favorites);
     }
 
+    /** @test */
     function an_authenticated_user_may_only_favorite_a_reply_once()
     {
         $this->signIn();

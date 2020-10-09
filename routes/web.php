@@ -56,3 +56,5 @@ Route::post('/replies/{reply}/best', [App\Http\Controllers\BestRepliesController
 Route::post('locked-threads/{thread}', [App\Http\Controllers\LockedThreadsController::class,'store'])->name('locked-threads.store')->middleware('admin');
 
 Route::get('threads/search', [App\Http\Controllers\SearchController::class,'show']);
+
+Route::view('scan', 'scan');

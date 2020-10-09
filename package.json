@@ -25,6 +25,11 @@
     },
     "dependencies": {
         "at.js": "^1.5.4",
-        "jquery.caret": "^0.3.1"
+        "express": "^4.17.1",
+        "jquery.caret": "^0.3.1",
+        "vue-instantsearch": "^3.4.2",
+        "vue-router": "^3.4.6",
+        "vue-server-renderer": "^2.6.12",
+        "webpack-merge": "^5.2.0"
     }
 }

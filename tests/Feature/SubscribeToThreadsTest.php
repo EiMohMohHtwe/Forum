@@ -22,6 +22,7 @@ class SubscribeToThreadsTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /** @test */
     public function a_user_can_subscribe_to_threads()
     {
         $this->signIn();
@@ -33,6 +34,7 @@ class SubscribeToThreadsTest extends TestCase
         $this->assertCount(1, $thread->fresh()->subscriptions);
     }
 
+    /** @test */
     public function a_user_can_unsubscribe_from_threads()
     {
         $this->signIn();

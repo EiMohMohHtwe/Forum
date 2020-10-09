@@ -22,21 +22,23 @@ class CreateThreadsTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /** @test */
     function guests_may_not_create_threads()
     {
         $this->expectException('Illuminate\Auth\AuthenticationException');
         
         $thread = make('App\Models\Thread');
-
         $this->post('/threads', $thread->toArray());
     }
 
+    /** @test */
     function guests_cannot_see_the_create_thread_page()
     {
         $this->get('/threads/create')
             ->assertRedirect('/login');
     }
 
+    /** @test */
     function authenticated_users_must_first_confirm_their_email_address_before_creating_threads()
     {
         $this->publishThread()
@@ -44,6 +46,7 @@ class CreateThreadsTest extends TestCase
             ->assertSessionHas('flash', 'You must first confirm your email address.');
     }
 
+    /** @test */
     function an_authenticated_user_can_create_new_forum_threads()
     {
         $this->signIn();
@@ -57,6 +60,7 @@ class CreateThreadsTest extends TestCase
             ->assertSee($thread->body);
     }
 
+    /** @test */
     function unauthorized_users_may_not_delete_threads()
     {
         $this->withExceptionHandling();
@@ -69,6 +73,7 @@ class CreateThreadsTest extends TestCase
         $this->delete($thread->path())->assertStatus(403);
     }
 
+    /** @test */
     function authorized_users_can_delete_threads()
     {
         $this->signIn();
