@@ -24,7 +24,7 @@ class TrendingThreadsTest extends TestCase
     {
         $this->assertEmpty(Redis::zrevrange('trending_threads', 0,-1));
 
-        $thread = create('App\Thread');
+        $thread = create('App\Models\Thread');
 
         $this->call('GET', $thread->path());
 

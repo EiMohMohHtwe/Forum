@@ -26,7 +26,7 @@ class AddBestReplyIdToThreadsTable extends Migration
     public function down()
     {
         Schema::table('threads', function (Blueprint $table) {
-            $table->dropColumn('best_reply_id');
+            //$table->dropColumn('best_reply_id');
         });
     }
 }

@@ -48,7 +48,7 @@ class ActivityTest extends TestCase
     {
         $this->signIn();
 
-        $reply = create('App\Reply');
+        $reply = create('App\Models\Reply');
 
         $this->assertEquals(2, Activity::count());
     }

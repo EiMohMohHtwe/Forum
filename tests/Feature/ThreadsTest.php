@@ -22,7 +22,7 @@ class ThreadsTest extends TestCase
     {
         $thread = factory('App\Models\Thread')->create();
 
-        $response = $this->get('/threads')
+        $this->get('/threads')
 
             ->assertSee($thread->title);
     }
@@ -56,7 +56,7 @@ class ThreadsTest extends TestCase
     /** @test */
     function a_thread_has_a_creator()
     {
-        $thread = factory('App\Thread')->create();
+        $thread = factory('App\Models\Thread')->create();
 
         $this->assertInstanceOf('App\Models\User', $thread->creator);
     }
@@ -89,9 +89,9 @@ class ThreadsTest extends TestCase
     /** @test */
     function a_user_can_filter_threads_according_to_a_channel()
     {
-        $channel = create('App\Channel');
-        $threadInChannel = create('App\Thread', ['channel_id' => $channel->id]);
-        $threadNotInChannel = create('App\Thread');
+        $channel = create('App\Models\Channel');
+        $threadInChannel = create('App\Models\Thread', ['channel_id' => $channel->id]);
+        $threadNotInChannel = create('App\Models\Thread');
 
         $this->get('/threads/' . $channel->slug)
             ->assertSee($threadInChannel->title)
@@ -101,10 +101,10 @@ class ThreadsTest extends TestCase
     /** @test */
     function a_user_can_filter_threads_by_any_username()
     {
-        $this->signIn(create('App\User', ['name' => 'test2']));
+        $this->signIn(create(User::class, ['name' => 'test2']));
 
-        $threadByJohn = create('App\Thread', ['user_id' => auth()->id()]);
-        $threadNotByJohn = create('App\Thread');
+        $threadByJohn = create(Thread::class, ['user_id' => auth()->id()]);
+        $threadNotByJohn = create(Thread::class);
 
         $this->get('threads?by=test2')
             ->assertSee($threadByJohn->title)
@@ -114,7 +114,7 @@ class ThreadsTest extends TestCase
     /** @test */
     function a_thread_can_be_subscribed_to()
     {
-        $thread = create('App\Thread');
+        $thread = create('App\Models\Thread');
 
         $thread->subscribe($userId = 1);
 
@@ -127,7 +127,7 @@ class ThreadsTest extends TestCase
     /** @test */
     function a_thread_can_be_unsubscribed_from()
     {
-        $thread = create('App\Thread');
+        $thread = create('App\Models\Thread');
 
         $thread->subscribe($userId = 1);
 
@@ -139,7 +139,7 @@ class ThreadsTest extends TestCase
     /** @test */
     function it_knows_if_the_authenticated_user_is_subscribed_to_it()
     {
-        $thread = create('App\Thread');
+        $thread = create('App\Models\Thread');
 
         $this->signIn();
 
@@ -155,7 +155,7 @@ class ThreadsTest extends TestCase
     {
         $this->signIn();
 
-        $thread = create('App\Thread');
+        $thread = create('App\Models\Thread');
 
         tap(auth()->user(), function ($user) use ($thread) {
             $this->assertTrue($thread->hasUpdatesFor($user));
@@ -169,7 +169,7 @@ class ThreadsTest extends TestCase
     /** @test */
     function a_thread_records_each_visit()
     {
-        $thread = make('App\Thread', ['id' => 1]);
+        $thread = make('App\Models\Thread', ['id' => 1]);
 
         $thread->visits()->reset();
 

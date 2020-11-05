@@ -31,7 +31,7 @@ class ReplyTest extends TestCase
     /** @test */
     function it_knows_if_it_was_just_published()
     {
-        $reply = create('App\Reply');
+        $reply = create('App\Models\Reply');
 
         $this->assertTrue($reply->wasJustPublished());
 
@@ -67,7 +67,7 @@ class ReplyTest extends TestCase
     /** @test */
     function it_knows_if_it_is_the_best_reply()
     {
-        $reply = create('App\Reply');
+        $reply = create('App\Models\Reply');
 
         $this->assertFalse($reply->isBest());
 

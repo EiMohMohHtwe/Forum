@@ -26,7 +26,7 @@ class AddConfirmationTokenToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('confirmation_token');
+            //$table->dropColumn('confirmation_token');
         });
     }
 }

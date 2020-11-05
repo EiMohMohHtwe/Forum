@@ -26,7 +26,7 @@ class AddSlugToThreadsTable extends Migration
     public function down()
     {
         Schema::table('threads', function (Blueprint $table) {
-            $table->dropColumn('thread_slug');
+            //$table->dropColumn('thread_slug');
         });
     }
 }
