@@ -51,7 +51,7 @@ class CreateThreadsTest extends TestCase
     {
         $this->signIn();
 
-        $thread = make('App\Thread');
+        $thread = make('App\Models\Thread');
 
         $response = $this->post('/threads', $thread->toArray());
 
@@ -65,7 +65,7 @@ class CreateThreadsTest extends TestCase
     {
         $this->withExceptionHandling();
         
-        $thread = create('App\Thread');
+        $thread = create('App\Models\Thread');
 
         $this->delete($thread->path())->assertRedirect('/login');
 
@@ -78,8 +78,8 @@ class CreateThreadsTest extends TestCase
     {
         $this->signIn();
 
-        $thread = create('App\Thread', ['user_id' => auth()->id()]);
-        $reply = create('App\Reply', ['thread_id' => $thread->id]);
+        $thread = create('App\Models\Thread', ['user_id' => auth()->id()]);
+        $reply = create('App\Models\Reply', ['thread_id' => $thread->id]);
 
         $response = $this->json('DELETE', $thread->path());
 
@@ -87,5 +87,14 @@ class CreateThreadsTest extends TestCase
 
         $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+    }
+
+    protected function publishThread($overrides = [])
+    {
+        $this->withExceptionHandling()->signIn();
+
+        $thread = make('App\Models\Thread', $overrides);
+
+        return $this->post(route('threads'), $thread->toArray() + ['g-recaptcha-response' => 'token']);
     }
 }

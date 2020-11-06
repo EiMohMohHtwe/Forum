@@ -14,12 +14,6 @@ class SpamTest extends TestCase
      *
      * @return void
      */
-    public function testExample()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-    }
 
     /** @test */
     public function it_checks_for_invalid_keywords()

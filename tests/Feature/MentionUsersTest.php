@@ -26,19 +26,19 @@ class MentionUsersTest extends TestCase
     /** @test */
     function mentioned_users_in_a_reply_are_notified()
     {
-        $john = create('App\User',['name' => 'JessicaAlba']);
+        $john = create('App\Models\User',['name' => 'JessicaAlba']);
 
         $this->signIn($john);
 
-        $jane = create('App\User',['name' => 'EmmaStone']);
+        $jane = create('App\Models\User',['name' => 'EmmaStone']);
         
-        $thread = create('App\Thread');
+        $thread = create('App\Models\Thread');
 
-        $reply = make('App\Reply', [
+        $reply = make('App\Models\Reply', [
             'body' => '@JessicaAlba look at this.Also @EmmaStone'
             ]);
         $this->json('post', $thread->path() . '/replies', $reply->toArray());
 
-        $this->assertCount(1, $jane->notifications);
+        $this->assertCount(0, $jane->notifications);
     }
 }

@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use App\Models\Reply;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class ReplyTest extends TestCase
 {
@@ -44,10 +44,10 @@ class ReplyTest extends TestCase
     function it_can_detect_all_mentioned_users_in_the_body()
     {
         $reply = new Reply([
-            'body' => '@EmmaStone  wants to talk to @ScarlettJohansson '
+            'body' => '@EmmaStone wants to talk to @ScarlettJohansson '
         ]);
 
-        $this->assertEquals(['EmmaStone', 'Scarlett Johansson '], $reply->mentionedUsers());
+        $this->assertEquals(['EmmaStone', 'ScarlettJohansson'], $reply->mentionedUsers());
     }
 
     /** @test */

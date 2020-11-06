@@ -30,7 +30,7 @@ class LockThreadsTest extends TestCase
 
         $this->signIn();
 
-        $thread = create('App\Thread', ['user_id' => auth()->id()]);
+        $thread = create('App\Models\Thread', ['user_id' => auth()->id()]);
 
         $this->post(route('locked-threads.store', $thread))->assertStatus(403);
 
@@ -40,9 +40,9 @@ class LockThreadsTest extends TestCase
     /** @test */
     function administrators_can_lock_threads()
     {
-        $this->signIn(factory('App\User')->states('administrator')->create());
+        $this->signIn(factory('App\Models\User')->states('administrator')->create());
 
-        $thread = create('App\Thread', ['user_id' => auth()->id()]);
+        $thread = create('App\Models\Thread', ['user_id' => auth()->id()]);
 
         $this->post(route('locked-threads.store', $thread));
 
@@ -54,7 +54,7 @@ class LockThreadsTest extends TestCase
     {
         $this->signIn();
 
-        $thread = create('App\Thread');
+        $thread = create('App\Models\Thread');
 
         $thread->lock();
 

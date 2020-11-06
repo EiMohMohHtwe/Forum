@@ -27,7 +27,7 @@ class SubscribeToThreadsTest extends TestCase
     {
         $this->signIn();
 
-        $thread = create('App\Thread');
+        $thread = create('App\Models\Thread');
 
         $this->post($thread->path() . '/subscriptions');
 
@@ -39,7 +39,7 @@ class SubscribeToThreadsTest extends TestCase
     {
         $this->signIn();
 
-        $thread = create('App\Thread');
+        $thread = create('App\Models\Thread');
 
         $thread->subscribe();
 

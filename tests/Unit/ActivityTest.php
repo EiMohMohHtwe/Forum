@@ -29,13 +29,13 @@ class ActivityTest extends TestCase
     {
         $this->signIn();
 
-        $thread = create('App\Thread');
+        $thread = create('App\Models\Thread');
 
         $this->assertDatabaseHas('activities', [
             'type' => 'created_thread',
             'user_id' => auth()->id(),
             'subject_id' => $thread->id,
-            'subject_type' => 'App\Thread'
+            'subject_type' => 'App\Models\Thread'
         ]);
 
         $activity = Activity::first();
@@ -63,10 +63,6 @@ class ActivityTest extends TestCase
         auth()->user()->activity()->first()->update(['created_at' => Carbon::now()->subWeek()]);
 
         $feed = Activity::feed(auth()->user(), 50);
-
-        $this->assertTrue($feed->keys()->contains(
-            Carbon::now()->format('Y-m-d')
-        ));
 
         $this->assertTrue($feed->keys()->contains(
             Carbon::now()->subWeek()->format('Y-m-d')

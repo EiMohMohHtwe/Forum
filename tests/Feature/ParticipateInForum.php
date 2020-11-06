@@ -37,8 +37,8 @@ class ParticipateInForum extends TestCase
     {
         $this->signIn();
 
-        $thread = create('App\Thread');
-        $reply = make('App\Reply');
+        $thread = create('App\Models\Thread');
+        $reply = make('App\Models\Reply');
 
         $this->post($thread->path(). '/replies', $reply->toArray());
 
@@ -51,7 +51,7 @@ class ParticipateInForum extends TestCase
     {
         $this->withExceptionHandling();
 
-        $reply = create('App\Reply');
+        $reply = create('App\Models\Reply');
 
         $this->delete("/replies/{$reply->id}")
             ->assertRedirect('login');
@@ -65,7 +65,7 @@ class ParticipateInForum extends TestCase
     function authorized_users_can_delete_replies()
     {
         $this->signIn();
-        $reply = create('App\Reply', ['user_id' => auth()->id()]);
+        $reply = create('App\Models\Reply', ['user_id' => auth()->id()]);
 
         $this->delete("/replies/{$reply->id}")->assertStatus(302);
 

@@ -31,7 +31,7 @@ class RegisterationTest extends TestCase
     {
         Mail::fake();
 
-        event(new Registered(create('App\User')));
+        event(new Registered(create('App\Models\User')));
 
         Mail::assertSent(PleaseConfirmYourEmail::class);
     }

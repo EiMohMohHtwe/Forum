@@ -26,9 +26,9 @@ class ProfilesTest extends TestCase
     /** @test */
     public function a_user_has_a_profile()
     {
-        $user = create('App\User');
+        $user = create('App\Models\User');
 
-        $this->get("/profiles/{ $user->name }")
+        $this->get("/profiles/" . $user->name )
             ->assertSee($user->name);
     }
 
@@ -37,7 +37,7 @@ class ProfilesTest extends TestCase
     {
         $this->signIn();
 
-        $thread = create('App\Thread', ['user_id' => auth()->id()]);
+        $thread = create('App\Models\Thread', ['user_id' => auth()->id()]);
 
         $this->get("/profiles/" . auth()->user()->name)
             ->assertSee($thread->title)

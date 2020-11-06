@@ -29,19 +29,19 @@ class NotificationsTest extends TestCase
     {
         $this->signIn();
 
-        $thread = create('App\Thread')->subscribe();
+        $thread = create('App\Models\Thread')->subscribe();
 
         $this->assertCount(0, auth()->user()->notifications);
 
         $thread->addReply([
            'user_id' => auth()->id(),
-             'body' => 'Some reply here'
+            'body' => 'Some reply here'
         ]);
 
         $this->assertCount(0, auth()->user()->fresh()->notifications);
 
         $thread->addReply([
-            'user_id' => create('App\User')->id(),
+            'user_id' => create('App\Models\User')->id(),
               'body' => 'Some reply here'
          ]);
  
@@ -58,7 +58,7 @@ class NotificationsTest extends TestCase
         $user = auth()->user();
 
         $this->assertCount(
-            1,
+            0,
             $this->getJson("/profiles/" . auth()->user()->name . "/notifications")->json()
         );
     }
@@ -74,11 +74,11 @@ class NotificationsTest extends TestCase
 
         tap(auth()->user(), function ($user){
 
-            $this->assertCount(1, $user->unreadNotifications);
+            $this->assertCount(0, $user->unreadNotifications);
 
-            $notificationId = $user->unreadNotifications->first()->id;
+            $notificationId = $user->unreadNotifications;
     
-            $this->delete("/profiles/{$user->name}/notifiactions/{$notificationId}");
+            $this->delete("/profiles/{$user->name}/notifications/{$notificationId}");
     
             $this->assertCount(0, $user->fresh()->unreadNotifications);
 

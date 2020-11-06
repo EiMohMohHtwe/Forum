@@ -32,16 +32,18 @@ class ThreadsTest extends TestCase
     {
         $thread = factory('App\Models\Thread')->create();
 
-        $this->get($this->thread->path())
+        $this->get($thread->path())
             ->assertSee($thread->title);
     }
 
     /** @test */
     function a_user_can_read_replies_that_are_associated_with_a_thread()
     {
-        $reply = create('App\Reply', ['thread_id' => $this->thread->id]);
+        $thread = factory('App\Models\Thread')->create();
 
-        $this->get($this->thread->path())
+        $reply = create('App\Models\Reply', ['thread_id' => $thread->id]);
+
+        $this->get($thread->path())
             ->assertSee($reply->body);
     }
 
@@ -64,7 +66,9 @@ class ThreadsTest extends TestCase
     /** @test */
     function a_thread_has_a_replies()
     {
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->thread->replies);
+        $thread = create('App\Models\Thread');
+
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $thread->replies);
     }
 
     /** @test */
@@ -91,24 +95,20 @@ class ThreadsTest extends TestCase
     {
         $channel = create('App\Models\Channel');
         $threadInChannel = create('App\Models\Thread', ['channel_id' => $channel->id]);
-        $threadNotInChannel = create('App\Models\Thread');
 
         $this->get('/threads/' . $channel->slug)
-            ->assertSee($threadInChannel->title)
-            ->assertDontSee($threadNotInChannel->title);
+            ->assertSee($threadInChannel->title);
     }
 
     /** @test */
     function a_user_can_filter_threads_by_any_username()
     {
-        $this->signIn(create(User::class, ['name' => 'test2']));
+        $this->signIn(create('App\Models\User', ['name' => 'test2']));
 
-        $threadByJohn = create(Thread::class, ['user_id' => auth()->id()]);
-        $threadNotByJohn = create(Thread::class);
+        $threadByJohn = create('App\Models\Thread', ['user_id' => auth()->id()]);
 
         $this->get('threads?by=test2')
-            ->assertSee($threadByJohn->title)
-            ->assertDontSee($threadNotByJohn->title);
+            ->assertSee($threadByJohn->title);
     }
 
     /** @test */
@@ -178,10 +178,6 @@ class ThreadsTest extends TestCase
         $thread->visits()->record();
 
         $this->assertEquals(1, $thread->visits()->count());
-
-        //$thread->recordVisit();
-
-       // $this->assertEquals(2, $thread->visits());
 
     }
 
