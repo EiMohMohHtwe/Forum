@@ -2,9 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -35,13 +37,13 @@ class UserTest extends TestCase
     /** @test */
     function a_user_can_determine_their_avatar_path()
     {
-        $user = create('App\Models\User');
+        $user = create(User::class);
 
-        $this->assertEquals('avatars/default.jpg', $user->avatar());
+        $this->assertEquals(asset(Storage::url('avatars/default.png')), $user->avatar_path);
 
         $user->avatar_path = 'avatars/me.jpg';
 
-        $this->assertEquals('avatars/me.jpg', $user->avatar());
+        $this->assertEquals(asset(Storage::url('avatars/me.jpg')), $user->avatar_path);
     }
 }
 

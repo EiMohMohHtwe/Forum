@@ -10,7 +10,7 @@ use Faker\Generator as Faker;
 $factory->define(Reply::class, function (Faker $faker) {
     return [
         'user_id' => User::count() ? User::pluck('id')->random() : factory(User::class),
-        'thread_id' => factory(Thread::class),
+        'thread_id' => factory(Thread::class)->create()->id,
         'body' => $faker->paragraph,
     ];
 });

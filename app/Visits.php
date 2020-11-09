@@ -24,7 +24,7 @@ class Visits
     {
         Redis::del($this->cacheKey());
 
-        return $this;
+        //return $this;
     }
 
     public function count()

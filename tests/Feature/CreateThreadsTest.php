@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -25,39 +26,21 @@ class CreateThreadsTest extends TestCase
     /** @test */
     function guests_may_not_create_threads()
     {
-        $this->expectException('Illuminate\Auth\AuthenticationException');
-        
-        $thread = make('App\Models\Thread');
-        $this->post('/threads', $thread->toArray());
-    }
-
-    /** @test */
-    function guests_cannot_see_the_create_thread_page()
-    {
-        $this->get('/threads/create')
-            ->assertRedirect('/login');
+        $this->post('threads')
+            ->assertRedirect('login');
     }
 
     /** @test */
     function authenticated_users_must_first_confirm_their_email_address_before_creating_threads()
     {
-        $this->publishThread()
-            ->assertRedirect('/threads')
-            ->assertSessionHas('flash', 'You must first confirm your email address.');
-    }
+        $user = factory('App\Models\User')->create();
 
-    /** @test */
-    function an_authenticated_user_can_create_new_forum_threads()
-    {
-        $this->signIn();
+        $this->signIn($user);
 
         $thread = make('App\Models\Thread');
 
-        $response = $this->post('/threads', $thread->toArray());
-
-        $this->get($response->headers->get('Location'))
-            ->assertSee($thread->title)
-            ->assertSee($thread->body);
+        $this->post('threads', $thread->toArray())
+            ->assertRedirect('threads');
     }
 
     /** @test */

@@ -48,13 +48,14 @@ class AddAvatarTest extends TestCase
     function a_user_may_add_an_avatar_to_their_profile()
     {
         $this->signIn();
+
         Storage::fake('public');
 
         $this->json('POST', 'api/users/' . auth()->id() . '/avatar', [
             'avatar' => $file = UploadedFile::fake()->image('avatar.jpg')
         ]);
 
-        $this->assertEquals('avatars/'.$file->hashName(), auth()->user()->avatar_path);
+        $this->assertEquals(asset(Storage::url('avatars/'.$file->hashName())), auth()->user()->avatar_path);
 
         Storage::disk('public')->assertExists('avatars/' . $file->hashName());
     }

@@ -52,7 +52,7 @@ class Thread extends Model
         return $this->belongsTo(Channel::class);
     }
 
-    public function addReply($reply)
+    public function addReply(array $reply)
     {
         $reply = $this->replies()->create($reply);
 

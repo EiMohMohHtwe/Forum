@@ -58,6 +58,7 @@ class User extends Authenticatable
     public function confirm()
     {
         $this->confirmed = true;
+        $this->confirmation_token = null;
 
         $this->save();
     }
@@ -70,9 +71,15 @@ class User extends Authenticatable
         );
     }
 
-    public function avatar()
+    // public function avatar()
+    // {
+    //     return asset($this->avatar_path ?: 'avatars/default.jpg');
+    // }
+
+    public function getAvatarPathAttribute($avatar)
     {
-        return asset($this->avatar_path ?: 'avatars/default.jpg');
+        //return asset($avatar ?: 'images/avatars/default.png');
+         return asset(\Storage::url($avatar ?: 'avatars/default.png'));
     }
 
     public function visitedThreadCacheKey($thread)

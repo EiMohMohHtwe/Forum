@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Visits;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Redis;
 use Tests\TestCase;
@@ -72,14 +73,11 @@ class ThreadsTest extends TestCase
     }
 
     /** @test */
-    public function a_thread_can_add_a_reply()
+    public function a_thread_body_is_sanitized_automatically()
     {
-        $this->thread->addReply([
-            'body' => 'test1',
-            'user_id' => 1
-        ]);
+        $thread = make('App\Models\Thread', ['body' => '<p>This is okay.</p>']);
 
-        $this->assertCount(1, $this->thread->replies);
+        $this->assertEquals("<p>This is okay.</p>", $thread->body);
     }
 
     /** @test */
@@ -133,7 +131,7 @@ class ThreadsTest extends TestCase
 
         $thread->unsubscribe($userId);
 
-        $thread->assertCount(0, $thread->subscriptions);
+        $this->assertCount(0, $thread->subscriptions);
     }
 
     /** @test */
@@ -169,25 +167,24 @@ class ThreadsTest extends TestCase
     /** @test */
     function a_thread_records_each_visit()
     {
-        $thread = make('App\Models\Thread', ['id' => 1]);
+        $thread = create('App\Models\Thread');
 
-        $thread->visits()->reset();
+        $this->assertSame(0, $thread->visits);
 
-        $this->assertSame(0, $thread->visits());
+        $this->call('GET', $thread->path());
 
-        $thread->visits()->record();
-
-        $this->assertEquals(1, $thread->visits()->count());
-
+        $this->assertEquals(1, $thread->fresh()->visits);
     }
 
     /** @test */
     function a_thread_may_be_locked()
     {
-        $this->assertFalse($this->thread->locked);
+        $thread = create('App\Models\Thread');
 
-        $this->thread->lock();
+        $this->assertFalse($thread->locked);
 
-        $this->assertTrue($this->thread->locked);
+        $thread->lock();
+
+        $this->assertTrue($thread->locked);
     }
 }

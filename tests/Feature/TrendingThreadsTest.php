@@ -17,6 +17,8 @@ class TrendingThreadsTest extends TestCase
         parent::setUp();
 
         Redis::del('trending_threads');
+
+        $this->assertEmpty(Redis::zrevrange('trending_threads', 0,-1));
     }
 
     /** @test */
