@@ -12,18 +12,6 @@ use Tests\TestCase;
 class AddAvatarTest extends TestCase
 {
     use DatabaseMigrations;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-
-    public function testExample()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-    }
 
     /** @test */
     public function only_members_can_add_avatars()

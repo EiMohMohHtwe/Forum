@@ -22,6 +22,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('threads/search', [App\Http\Controllers\SearchController::class,'show']);
 Route::get('/threads', [ThreadsController::class,'index'])->name('threads.index');
 Route::get('/threads/{channel}', [ThreadsController::class,'index']);
 Route::get('/create', [ThreadsController::class,'create']);
@@ -55,6 +56,6 @@ Route::post('/replies/{reply}/best', [App\Http\Controllers\BestRepliesController
 
 Route::post('locked-threads/{thread}', [App\Http\Controllers\LockedThreadsController::class,'store'])->name('locked-threads.store')->middleware('admin');
 
-Route::get('threads/search', [App\Http\Controllers\SearchController::class,'show']);
+
 
 Route::view('scan', 'scan');

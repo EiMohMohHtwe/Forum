@@ -11,19 +11,7 @@ use Tests\TestCase;
 class NotificationsTest extends TestCase
 {
     use DatabaseMigrations;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-
-    public function testExample()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-    }
-
+ 
     /** @test */
     function a_notification_is_prepared_when_a_subscribed_thread_receives_a_new_reply_that_is_not_by_the_current_user()
     {

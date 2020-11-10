@@ -10,17 +10,6 @@ use Tests\TestCase;
 class SubscribeToThreadsTest extends TestCase
 {
     use DatabaseMigrations;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function testExample()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-    }
 
     /** @test */
     public function a_user_can_subscribe_to_threads()

@@ -10,18 +10,6 @@ use Tests\TestCase;
 class LockThreadsTest extends TestCase
 {
     use DatabaseMigrations;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-
-    public function testExample()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-    }
 
     /** @test */
     function non_administrators_may_not_lock_threads()

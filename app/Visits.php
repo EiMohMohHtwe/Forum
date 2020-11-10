@@ -36,4 +36,5 @@ class Visits
     {
         return "threads.{$this->thread->id}.visits";
     }
+
 }

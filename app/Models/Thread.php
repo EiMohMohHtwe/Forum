@@ -56,7 +56,13 @@ class Thread extends Model
     {
         $reply = $this->replies()->create($reply);
 
-        event(new ThreadReceivedNewReply($reply));
+        //event(new ThreadReceivedNewReply($reply));
+
+        foreach ($this->subscriptions as $subscription) {
+            if($subscription->user_id != $reply->user_id) {
+                $subscription->user->notify(new ThreadWasUpdated($this, $reply));
+            }
+        }
             
         return $reply;
     }
@@ -96,9 +102,16 @@ class Thread extends Model
         return $this->updated_at > cache($key);
     }
 
+    public function recordVisit()
+    {
+        Redis::incr("threads.{$this->id}.visits");
+
+        return $this;
+    }
+
     public function visits()
     {
-        return new Visits($this);
+       return Redis::get("threads.{$this->id}.visits");
     }
 
     public function markBestReply(Reply $reply)

@@ -12,17 +12,7 @@ use Tests\TestCase;
 class UserTest extends TestCase
 {
     use DatabaseMigrations;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function testExample()
-    {
-        $response = $this->get('/');
 
-        $response->assertStatus(200);
-    }
 
     /** @test */
     public function a_user_can_fetch_their_most_recent_reply()

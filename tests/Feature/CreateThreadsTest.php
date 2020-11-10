@@ -11,17 +11,6 @@ use Tests\TestCase;
 class CreateThreadsTest extends TestCase
 {
     use DatabaseMigrations;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function testExample()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-    }
 
     /** @test */
     function guests_may_not_create_threads()

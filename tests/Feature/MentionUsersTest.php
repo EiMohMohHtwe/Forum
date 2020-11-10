@@ -10,18 +10,6 @@ use Tests\TestCase;
 class MentionUsersTest extends TestCase
 {
     use DatabaseMigrations;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-
-    public function testExample()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-    }
 
     /** @test */
     function mentioned_users_in_a_reply_are_notified()

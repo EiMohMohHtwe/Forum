@@ -36,7 +36,7 @@
                     </div>
                     <div class="card-footer">
                         <div class="panel-footer">
-                            {{ $thread->visits()->count() }} Visits
+                            {{ $thread->visits() }} Visits
                         </div>
                     </div>
 
@@ -62,6 +62,7 @@
                     </ul>
                     <div class="form-group">
                     <form method="GET" action="/threads/search">
+                    @csrf
                         <div class="form-group">
                             <input type="text" placeholder="Search for something..." name="q" class="form-control">
                         </div>

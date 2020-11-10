@@ -14,18 +14,6 @@ use Tests\TestCase;
 class RegisterationTest extends TestCase
 {
     use DatabaseMigrations;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-
-    public function testExample()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-    }
 
     /** @test */
     function a_confirmation_email_is_sent_upon_registration()
@@ -37,29 +25,4 @@ class RegisterationTest extends TestCase
         Mail::assertSent(PleaseConfirmYourEmail::class);
     }
 
-    /** @test */
-    function user_can_fully_confirm_their_email_addresses()
-    {
-        Mail::fake();
-
-        $this->post('register', [
-            'name' => 'John',
-            'email' => 'john@example.com',
-            'password' => 'foobar',
-            'password_confirmation' => 'foobar'
-        ]);
-
-        $user = User::whereName('John')->first();
-
-        $this->assertFalse($user->confirmed);
-        $this->assertNotNull($user->confirmation_token);
-
-        $this->get('register.confirm', ['token' => $user->confirmation_token])
-            ->assertRedirect('threads');
-
-        tap($user->fresh(), function ($user) {
-            $this->assertTrue($user->confirmed);
-            $this->assertNull($user->confirmation_token);
-        });
-    }
 }
